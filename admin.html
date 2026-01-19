@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>لوحة التحكم</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+font-family:Arial;
+background:#0b0538;
+color:#fff;
+margin:0;
+padding:30px;
+}
+.card{
+background:#1e1e1e;
+padding:20px;
+border-radius:15px;
+max-width:400px;
+margin:auto;
+}
+input,button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:none;
+}
+button{
+background:#2ecc71;
+color:#000;
+font-size:16px;
+cursor:pointer;
+}
+.hidden{display:none;}
+</style>
+</head>
+<body>
+
+<div class="card" id="loginBox">
+<h3>أدخل رمز التحكم</h3>
+<input type="password" id="code" placeholder="الرمز السري">
+<button onclick="login()">دخول</button>
+</div>
+
+<div class="card hidden" id="adminBox">
+<h3>لوحة التحكم</h3>
+<input type="text" id="msg" placeholder="اكتب رسالة للمستخدم">
+<button onclick="save()">حفظ</button>
+<button onclick="logout()" style="background:#e74c3c;color:#fff">خروج</button>
+</div>
+
+<script>
+const SECRET = "12345"; // ← غير الرمز هنا
+
+function login(){
+let code = document.getElementById("code").value;
+if(code === SECRET){
+localStorage.setItem("admin","1");
+showAdmin();
+}else{
+alert("رمز خاطئ");
+}
+}
+
+function showAdmin(){
+document.getElementById("loginBox").classList.add("hidden");
+document.getElementById("adminBox").classList.remove("hidden");
+}
+
+function save(){
+let msg = document.getElementById("msg").value;
+localStorage.setItem("public_msg",msg);
+alert("تم الحفظ");
+}
+
+function logout(){
+localStorage.removeItem("admin");
+location.reload();
+}
+
+if(localStorage.getItem("admin") === "1"){
+showAdmin();
+}
+</script>
+
+</body>
+</html>
